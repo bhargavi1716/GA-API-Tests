@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "71b0cbb5-2599-4a79-8737-c1fcb4ce688a",
+		"name": "Get Draw By Id",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Draw By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abbeace1-6b3b-4251-8c7e-1cfd4c45f866",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"var inputGameName = pm.request.url.path[4]\r",
+							"\r",
+							"if(inputGameName.includes(\"%20\")){\r",
+							"    inputGameName = inputGameName.replace(\"%20\",\" \")\r",
+							"}\r",
+							"\r",
+							"pm.test(\"checking game name\", function() {\r",
+							"    pm.expect(jsonData.gameName).to.eql(inputGameName);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"checking game id\", function() {\r",
+							"    pm.expect(jsonData.id).to.eql(pm.request.url.path[5]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/draws/:game-name/:id",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"draws",
+						":game-name",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "game-name",
+							"value": "CASH POP"
+						},
+						{
+							"key": "id",
+							"value": "36"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
