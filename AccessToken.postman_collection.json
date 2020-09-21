@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "f1a99f24-071d-43ba-97fb-9eaa1b1eca0d",
+		"name": "AccessToken",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ffbe35e-dee2-4685-90c0-3881c9e378f5",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"authCode\");\r",
+							"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
+							"\r",
+							"pm.test(\"authCode is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n   \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/login",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"login"
+					]
+				},
+				"description": "POSTRequest, gives auth code"
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2d0223f-2f9f-4d30-8fe5-167dc4c82383",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"refreshToken\");\r",
+							"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
+							"pm.environment.unset(\"oAuthToken\");\r",
+							"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"tokenType is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"tokenType\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is REFRESH\", function() {\r",
+							"    pm.expect(jsonData[0].tokenType).to.eql(\"REFRESH\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is OAuth\", function() {\r",
+							"  pm.expect(jsonData[1].tokenType).to.eql(\"OAuth\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "64a526e8-f918-4300-b4c5-a3c270c033eb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",    \r\n    \"authCode\": \"{{authCode}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"self",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fc0d27ac-6004-445a-ac01-e130b95c1d64",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "fd9a5c87-911c-4749-b6a6-8df42d9969a8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
