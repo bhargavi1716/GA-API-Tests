@@ -1,0 +1,622 @@
+{
+	"info": {
+		"_postman_id": "2b2d5210-c864-4f94-b049-ff51205f6756",
+		"name": "View Games",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Keno Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66dba834-fd99-4c8c-bcd9-1844710ded36",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"KENO!\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=1&game-names=KENO!",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "1"
+						},
+						{
+							"key": "game-names",
+							"value": "KENO!"
+						}
+					]
+				},
+				"description": "View Games for Keno"
+			},
+			"response": []
+		},
+		{
+			"name": "Get GEORGIA FIVE Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2150ab11-0a52-4bbb-9c71-b0c6989b7371",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"GEORGIA FIVE\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=GEORGIA FIVE",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "GEORGIA FIVE"
+						}
+					]
+				},
+				"description": "View games for Georgia Five"
+			},
+			"response": []
+		},
+		{
+			"name": "Get MEGA MILLIONS Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73e375a7-d4f2-4384-82c8-524b58d08f45",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"MEGA MILLIONS\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=1&game-names=MEGA MILLIONS",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "1"
+						},
+						{
+							"key": "game-names",
+							"value": "MEGA MILLIONS"
+						}
+					]
+				},
+				"description": "View games for Mega Millions "
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH POP Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a4a1479-43bf-4e07-9c01-a6590b36cdf3",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH POP\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=1&game-names=CASH POP",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "1"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH POP"
+						}
+					]
+				},
+				"description": "View games for CashPop"
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH 4 Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a1c39fd-3774-4064-87a2-b7936ced69e5",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH 4\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=CASH 4",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH 4"
+						}
+					]
+				},
+				"description": "View Games for Cash4"
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH 4 LIFE Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95c627da-54e0-462f-a372-df48e70ee9e5",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH4LIFE\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=CASH4LIFE",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH4LIFE"
+						}
+					]
+				},
+				"description": "View Games for Cash4"
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH 3 Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a5469e7-4808-42c3-8dc3-ba04da4a15a9",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH 3\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=CASH 3",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH 3"
+						}
+					]
+				},
+				"description": "View Games for Cash3"
+			},
+			"response": []
+		},
+		{
+			"name": "Get POWERBALL Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebcfa03c-1bb0-4eb2-95ab-b8681f145e1b",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"POWERBALL\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=POWERBALL",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "POWERBALL"
+						}
+					]
+				},
+				"description": "View Games for Powerball"
+			},
+			"response": []
+		},
+		{
+			"name": "Get JUMBO LOTTO Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad291dec-69ae-4bca-b4cb-20aa321026c6",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"JUMBO LOTTO\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=JUMBO LOTTO",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "JUMBO LOTTO"
+						}
+					]
+				},
+				"description": "View Games for Powerball"
+			},
+			"response": []
+		},
+		{
+			"name": "Get FANTASY 5 Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8650a2b0-e72e-4bab-a503-ba0b30e99d7b",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"FANTASY 5\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.be.oneOf([\"OPEN\",\"CLOSED\"]);\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/?previous-draws=2&game-names=FANTASY 5",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						""
+					],
+					"query": [
+						{
+							"key": "previous-draws",
+							"value": "2"
+						},
+						{
+							"key": "game-names",
+							"value": "FANTASY 5"
+						}
+					]
+				},
+				"description": "View Games for Powerball"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d898adef-c73e-470b-99c2-f183eb128dfc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9db225d2-c161-4de8-9eeb-2742a1bcca2d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "1c025dab-dd92-4bfb-b2a7-d111fd839107",
+		"name": "WinningNumbers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cash Pop Winning Numbers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15c2643d-88d6-41f3-b95e-484c58bf1b73",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH POP\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"        console.log(\"*************\");\r",
+							"        console.log(jsonData.draws[i].results) \r",
+							"        console.log(jsonData.draws[i].results.length);\r",
+							"        console.log(jsonData.draws[i].prizeTiers.length);\r",
+							"        console.log(\"*************\");\r",
+							"        pm.test(\"checking for Results for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].results.length).to.eql(1);\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"checking for Prizeties info for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].prizeTiers.length).to.eql(27);\r",
+							"        });\r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=CASH+POP&size=20&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc"
+						},
+						{
+							"key": "previous-draws",
+							"value": "100"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH+POP"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MEGA MILLIONS Winning Numbers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc1a2446-15c8-4ba1-9787-eed031d41672",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"MEGA MILLIONS\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"        console.log(\"*************\");\r",
+							"        console.log(jsonData.draws[i].results) \r",
+							"        console.log(jsonData.draws[i].results.length);\r",
+							"        console.log(jsonData.draws[i].prizeTiers.length);\r",
+							"        console.log(\"*************\");\r",
+							"        pm.test(\"checking for Results for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].results.length).to.eql(1);\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"checking for Prizeties info for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].prizeTiers.length).to.eql(17);\r",
+							"        });\r",
+							"       \r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=MEGA MILLIONS&size=20&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc"
+						},
+						{
+							"key": "previous-draws",
+							"value": "100"
+						},
+						{
+							"key": "game-names",
+							"value": "MEGA MILLIONS"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POWERBALL Winning Numbers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab5ec0ae-25cc-4ea9-96d9-601c5a4295ba",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"POWERBALL\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"        console.log(\"*************\");\r",
+							"        console.log(jsonData.draws[i].results) \r",
+							"        console.log(jsonData.draws[i].results.length);\r",
+							"        console.log(jsonData.draws[i].prizeTiers.length);\r",
+							"        console.log(\"*************\");\r",
+							"        pm.test(\"checking for Results for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].results.length).to.eql(1);\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"checking for Prizeties info for Draw Id : \" + jsonData.draws[i].id, function() {\r",
+							"            pm.expect(jsonData.draws[i].prizeTiers.length).to.eql(17);\r",
+							"        });\r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=POWERBALL&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc"
+						},
+						{
+							"key": "previous-draws",
+							"value": "100"
+						},
+						{
+							"key": "game-names",
+							"value": "POWERBALL"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "68f83858-4e1e-423e-8734-048e9e052458",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d5e08184-ea40-4e0e-853d-a6ce5f1bd0c1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

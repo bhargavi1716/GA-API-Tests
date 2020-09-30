@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "0904078c-e3ee-44b2-b305-10fc8197ba4e",
+		"name": "PlayerRegistration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "L2 Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f496bbf-0359-4b82-a36b-80b48aceff47",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-EXECUTE-SYNC",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"personalInfo\": {\r\n        \"firstName\": \"test\",\r\n        \"lastName\": \"test\",\r\n        \"suffix\": \"I\",\r\n        \"dateOfBirth\": 703815400000,\r\n        \"citizenship\": \"RESIDENT\",\r\n        \"addresses\": {\r\n            \"MAILING\": {\r\n                \"address1\": \"Test afdf\",\r\n                \"address2\": \"Fsff\",\r\n                \"type\": \"MAILING\",\r\n                \"postalCode\": \"30905\",\r\n                \"city\": \"Atlanta\",\r\n                \"state\": \"GA\",\r\n                \"isoCountryCode\": \"US\"\r\n            }\r\n        },\r\n        \"phones\": {\r\n            \"HOME\": {\r\n                \"type\": \"HOME\",\r\n                \"number\": \"1234567890\"\r\n            },\r\n            \"MOBILE\": {\r\n                \"type\": \"MOBILE\",\r\n                \"number\": \"1234567890\"\r\n            }\r\n        },\r\n        \"emails\": {\r\n            \"PERSONAL\": {\r\n                \"type\": \"PERSONAL\",\r\n                \"address\": \"gasit11@mailinator.com\",\r\n                \"verified\": false\r\n            }\r\n        },\r\n        \"passwordHints\": [\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What was the make of your first car?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"tetd\"\r\n                }\r\n            },\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What is your favorite song?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"uugsff\"\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    \"password\": \"Password1\",\r\n    \"nonpublicPersonalInfo\": {\r\n        \"dateOfBirth\": 703815400000,\r\n        \"socialSecurityNumber\": \"3445\"\r\n    },\r\n    \"profile\": {\r\n        \"acceptTermsAndConditions\": true,\r\n        \"userName\": \"gasit11@mailinator.com\",\r\n        \"registrationLevel\": 2,\r\n        \"language\": \"en_US\",\r\n        \"preferredCurrency\": \"USD\",\r\n        \"notificationPreferences\": [\r\n            {\r\n                \"eventType\": \"OffersAndUpdates\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": false\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"JackpotAlerts\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"Coupons\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"DailyAndWinningNumbers\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    \"consents\": [\r\n        {\r\n            \"enabled\": true,\r\n            \"id\": \"9\",\r\n            \"version\": \"1\",\r\n            \"language\": \"en_US\",\r\n            \"requiresConsent\": false,\r\n            \"nextVersion\": null,\r\n            \"updateDate\": null\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/players/",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"players",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "L1 Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "259754b5-b101-410e-a23d-776db108d227",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-EXECUTE-SYNC",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"personalInfo\": {\r\n        \"firstName\": \"test\",\r\n        \"lastName\": \"test\",\r\n        \"suffix\": \"Jr\",\r\n        \"emails\": {\r\n            \"PERSONAL\": {\r\n                \"address\": \"loneregistration@mailinator.com\",\r\n                \"type\": \"PERSONAL\",\r\n                \"verified\": false\r\n            }\r\n        },\r\n        \"dateOfBirth\": 631152000761,\r\n        \"passwordHints\": [\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"In what city were you born?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"sattenapalli\"\r\n                }\r\n            },\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What was the make of your first car?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"dzire\"\r\n                }\r\n            }\r\n        ],\r\n        \"citizenship\": \"RESIDENT\"\r\n    },\r\n    \"password\": \"Password1\",\r\n    \"profile\": {\r\n        \"notificationPreferences\": [\r\n            {\r\n                \"eventType\": \"OffersAndUpdates\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"JackpotAlerts\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"Coupons\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"DailyAndWinningNumbers\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            }\r\n        ],\r\n        \"userName\": \"loneregistration@mailinator.com\",\r\n        \"registrationLevel\": 5,\r\n        \"language\": \"en_US\",\r\n        \"preferredCurrency\": \"USD\"\r\n    },\r\n    \"consents\": [\r\n        {\r\n            \"id\": \"9\",\r\n            \"version\": \"1\",\r\n            \"nextVersion\": null,\r\n            \"enabled\": true,\r\n            \"requiresConsent\": null,\r\n            \"updateDate\": 1600337448763,\r\n            \"language\": \"en_US\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/players/",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"players",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "90bde15b-e38d-42b6-9ae5-d53770eee68c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d1c7fa7-0ceb-45aa-8ff4-e20144ea36bb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

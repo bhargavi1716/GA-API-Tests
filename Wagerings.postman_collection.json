@@ -1,0 +1,938 @@
+{
+	"info": {
+		"_postman_id": "2ba118b2-b486-404b-a48e-4d7c091a1269",
+		"name": "Wagerings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2702c1c7-1989-482a-8359-f97b5f095201",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"authCode\");\r",
+							"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
+							"\r",
+							"pm.test(\"authCode is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n   \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/login",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"login"
+					]
+				},
+				"description": "POSTRequest, gives auth code"
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eed2fd88-03f3-48b8-8f40-586c63f08f22",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"refreshToken\");\r",
+							"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
+							"pm.environment.unset(\"oAuthToken\");\r",
+							"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"tokenType is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"tokenType\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is REFRESH\", function() {\r",
+							"    pm.expect(jsonData[0].tokenType).to.eql(\"REFRESH\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is OAuth\", function() {\r",
+							"  pm.expect(jsonData[1].tokenType).to.eql(\"OAuth\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ca76fc89-af38-4bcb-a845-de9569bff614",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",    \r\n    \"authCode\": \"{{authCode}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"self",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fantasy 5 Wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bcc7632-bd87-42d5-8f8b-ad325417a838",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"FANTASY 5\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"39\");\r",
+							"    \r",
+							"});\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e3739d8e-6bbf-492d-991e-b0e07a824195",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 1,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"FANTASY 5\",\r\n        \"addonWagers\": null,\r\n        \"price\": 100,\r\n        \"id\": null,\r\n        \"requestId\": \"1924d951-e24c-441c-818f-b5e4b62370b5\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"11\",\r\n                    \"12\",\r\n                    \"13\",\r\n                    \"14\",\r\n                    \"15\"\r\n                ],\r\n                \"secondarySelections\": null,\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": null,\r\n                \"secondarySelectionsQuickpicked\": null,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 100,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"220fbed75c38080c198bd89f5ea8cb7c99e55c9a1bb590a993343fbe94ab7581\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": null,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bulls Eye Keno Wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e40044fb-8d6c-4794-8686-cdb49d9efb9d",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"KENO\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"REJECTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"\r",
+							"   \r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "98973266-f00a-4bff-ba40-8b665fb1a0aa",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n {\r\n     \"type\": \"NORMAL\",\r\n     \"duration\": 1,\r\n     \"gameName\": \"KENO!\",\r\n     \"price\": 200,\r\n     \"stake\": 200,\r\n     \"extraPlayed\": true,\r\n     \"boards\": [\r\n     {\r\n         \"primarySelections\": [\"1\", \"2\", \"3\", \"4\"],\r\n         \"primarySelectionsQuickpicked\": false,\r\n         \"multiplier\": false,\r\n         \"quickpick\": false\r\n     }],\r\n     \"delay\": 0,\r\n     \"digest\": \"3909e9fa000a06cdf2189598b77c7ee0b8b1f47831ffac3bba41ff49e25ca2ec\"\r\n }]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash4Life Wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7fe561c4-3665-4292-a7b3-8b9e57509f71",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"CASH4LIFE\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"40\");\r",
+							"    \r",
+							"});\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e14566c5-d356-4551-a92c-e4c544241415",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 1,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"CASH4LIFE\",\r\n        \"addonWagers\": null,\r\n        \"price\": 200,\r\n        \"id\": null,\r\n        \"requestId\": \"5c4e7ca2-f5b6-48ad-8ba8-2d234ac1fc8c\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": false,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"1\",\r\n                    \"2\",\r\n                    \"3\",\r\n                    \"4\",\r\n                    \"5\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"2\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondarySelectionsQuickpicked\": false,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 200,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"1126fad29f458d76d65c37bfc94d00d2eb030367ff6c4bac5d5d04b4e48ebe7b\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": null,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash4Life Wagering - 2 Boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36190c33-afd1-4028-9b50-411cc22a8f08",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"CASH4LIFE\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId[0]).to.eql(\"40\");\r",
+							"        pm.expect(jsonData[0].drawIds[1]).to.eql(\"41\");\r",
+							"    \r",
+							"});\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "92ec133b-6aca-4853-aae6-03b706b4baa1",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 2,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"CASH4LIFE\",\r\n        \"addonWagers\": null,\r\n        \"price\": 800,\r\n        \"id\": null,\r\n        \"requestId\": \"a68acaf4-1342-4e23-a63c-316a17be8d02\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": false,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"1\",\r\n                    \"2\",\r\n                    \"3\",\r\n                    \"4\",\r\n                    \"5\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"2\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondarySelectionsQuickpicked\": false,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            },\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": false,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"1\",\r\n                    \"2\",\r\n                    \"3\",\r\n                    \"4\",\r\n                    \"5\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"1\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondarySelectionsQuickpicked\": false,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 200,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"C1FCB94E72C1E0B5D2667714BBBB1319CF37A16A3A26D3E4E7FD5B7D97A55DEA\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": null,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash Pop Wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b085156-d1e9-432d-bf1b-3ff9ba38a295",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"CASH POP\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"50\");\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9b6e28c9-09d6-4f83-869c-17eb8e8d0b31",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n   {\r\n  \"type\": \"NORMAL\",\r\n  \"duration\": 1,\r\n  \"gameName\": \"CASH POP\",\r\n  \"price\": 100,\r\n  \"stake\": 100,\r\n  \"boards\": [{\r\n    \"primarySelections\": [1],\r\n    \"quickPickCount\": 0,\r\n    \"primarySelectionsQuickpicked\": false,\r\n    \"secondaryQuickPickCount\": 0,\r\n    \"secondarySelectionsQuickpicked\": false,\r\n    \"multiplier\": false,\r\n    \"quickpick\": false\r\n  }\r\n  ],\r\n  \"drawNames\": [\r\n    \"Night Owl\"\r\n  ],\r\n  \"delay\": 0,\r\n  \"digest\": \"8eac7ddf5f6b6f19d6dba2e5a1d29b854d8a2cd164c19edb4d6e2bbf81d538d5\"\r\n}\r\n\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mega Millions wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8242a27c-ec61-4d4e-8a00-8d7e3ecbcf26",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"MEGA MILLIONS\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"12\");\r",
+							"    \r",
+							"});\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "91bdb164-a476-470d-bc6b-2bdf36234304",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 1,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"MEGA MILLIONS\",\r\n        \"addonWagers\": null,\r\n        \"price\": 600,\r\n        \"id\": null,\r\n        \"requestId\": \"0d669a24-9ea0-46b4-adc0-ba53dbd1896a\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"4\",\r\n                    \"11\",\r\n                    \"27\",\r\n                    \"50\",\r\n                    \"58\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"3\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": true,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": 5,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            },\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"21\",\r\n                    \"37\",\r\n                    \"48\",\r\n                    \"52\",\r\n                    \"54\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"6\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": true,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": 5,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            },\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"10\",\r\n                    \"18\",\r\n                    \"37\",\r\n                    \"38\",\r\n                    \"55\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"5\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": true,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": 5,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 200,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"7bd198d442c45066ffd35662a0c6dc504aa3c5af0074459745344686fe33ec63\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": 600,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Power Ball wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7040bff3-df2a-4b2d-9228-29e770710ed5",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"POWERBALL\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"12\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"12\");\r",
+							"    \r",
+							"});\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e5f82e81-83ea-4fe7-b348-fc4b6396a701",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 1,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"POWERBALL\",\r\n        \"addonWagers\": null,\r\n        \"price\": 200,\r\n        \"id\": null,\r\n        \"requestId\": \"b34dae12-a0f3-444e-a7c6-89d1d6f4d590\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"5\",\r\n                    \"9\",\r\n                    \"15\",\r\n                    \"20\",\r\n                    \"51\"\r\n                ],\r\n                \"secondarySelections\": [\r\n                    \"22\"\r\n                ],\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": true,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 200,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"1f65c18de7fa33e16e83ef815b5c81933f411e6df4256852c1a7b551a0af0308\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": null,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Keno Wagering",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a464a1a0-1dd0-4cc1-8e32-d3a4e2136da2",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"status\": null,\r\n        \"rejectReason\": null,\r\n        \"error\": null,\r\n        \"type\": \"NORMAL\",\r\n        \"channel\": null,\r\n        \"drawIds\": null,\r\n        \"drawId\": null,\r\n        \"duration\": 1,\r\n        \"delay\": 0,\r\n        \"drawNames\": null,\r\n        \"gameName\": \"KENO!\",\r\n        \"addonWagers\": null,\r\n        \"price\": 100,\r\n        \"id\": null,\r\n        \"requestId\": \"5fdee4ae-8c53-46d8-9460-acea8829cddc\",\r\n        \"serialNumber\": null,\r\n        \"boards\": [\r\n            {\r\n                \"systemBetType\": null,\r\n                \"betType\": null,\r\n                \"favorite\": null,\r\n                \"favoriteId\": null,\r\n                \"quickpick\": true,\r\n                \"multiplier\": false,\r\n                \"primarySelections\": [\r\n                    \"1\",\r\n                    \"2\",\r\n                    \"3\",\r\n                    \"4\",\r\n                    \"5\",\r\n                    \"6\",\r\n                    \"7\"\r\n                ],\r\n                \"secondarySelections\": null,\r\n                \"tertiarySelections\": null,\r\n                \"primaryMultipleSelections\": null,\r\n                \"secondaryMultipleSelections\": null,\r\n                \"tertiaryMultipleSelections\": null,\r\n                \"primarySelectionsQuickpicked\": null,\r\n                \"secondarySelectionsQuickpicked\": null,\r\n                \"tertiarySelectionsQuickpicked\": null,\r\n                \"stake\": null,\r\n                \"selections\": null,\r\n                \"stakes\": null,\r\n                \"soldOut\": null,\r\n                \"addonPlayed\": null,\r\n                \"drawNames\": null,\r\n                \"taxes\": null,\r\n                \"quickPickCount\": null,\r\n                \"secondaryQuickPickCount\": null,\r\n                \"tertiaryQuickPickCount\": null,\r\n                \"groupMemberId\": null,\r\n                \"potentialPrizeAmount\": null\r\n            }\r\n        ],\r\n        \"transactionTime\": null,\r\n        \"additionalPrizeTier\": null,\r\n        \"stake\": 100,\r\n        \"multiplier\": null,\r\n        \"predefinedGameRuleSetId\": null,\r\n        \"systemLevel\": null,\r\n        \"subscriptionId\": null,\r\n        \"syndicateId\": null,\r\n        \"syndicateInstanceId\": null,\r\n        \"syndicateTotalParts\": null,\r\n        \"syndicatePartsPerWager\": null,\r\n        \"groupMemberId\": null,\r\n        \"groupId\": null,\r\n        \"favorite\": null,\r\n        \"favoriteId\": null,\r\n        \"digest\": \"5e211d15a4fea5d520b02f0098c9a8196b70c5b16b0b7e1d3912b843540c50a7\",\r\n        \"paymentSourceId\": null,\r\n        \"paymentAmount\": null,\r\n        \"paymentTransactionId\": null,\r\n        \"signature\": null,\r\n        \"drawStartDate\": null,\r\n        \"drawEndDate\": null,\r\n        \"revision\": null,\r\n        \"freeTicket\": null,\r\n        \"freeTickets\": null,\r\n        \"ticketSecurity\": null,\r\n        \"alreadyPrinted\": null,\r\n        \"addonPlayed\": null,\r\n        \"freeTicketRequest\": null,\r\n        \"promotionId\": null,\r\n        \"paymentType\": null,\r\n        \"prizes\": null,\r\n        \"bonusEntries\": null,\r\n        \"webCode\": null,\r\n        \"taxes\": null,\r\n        \"discountAmount\": null,\r\n        \"promotion\": null,\r\n        \"correlationId\": null,\r\n        \"ticketMessage\": null,\r\n        \"wageredAt\": null,\r\n        \"redemptionMethod\": null,\r\n        \"extraPlayed\": null,\r\n        \"gridId\": null,\r\n        \"fractions\": null,\r\n        \"resultDate\": null,\r\n        \"ticketEntryCode\": null,\r\n        \"fractionSerialNumbers\": null,\r\n        \"triggerType\": null,\r\n        \"autoTopUp\": null,\r\n        \"idDocument\": null,\r\n        \"prolongation\": null,\r\n        \"betSlipId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash 3 wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "624989e4-e0ec-4110-b32a-7f248dbbbbba",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"CASH 3\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"50\");\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4ef82b50-5b97-4fe3-af0b-15af2c0db116",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n{\r\n  \"type\":\"NORMAL\",\r\n  \"duration\":1,\r\n  \"gameName\":\"CASH 3\",\r\n  \"price\":50,\r\n  \"stake\":50,\r\n  \"boards\":\r\n  [\r\n    {\r\n      \"primarySelections\":[\"5\",\"6\",\"7\"],\r\n      \"betType\":\"Str\",\r\n      \"quickpick\":false,\r\n      \"multiplier\":false\r\n    }\r\n  ],\r\n  \"drawNames\": [\r\n    \"MIDDAY\"\r\n  ],\r\n  \"delay\":0,\r\n  \"digest\":\"ecca8964a7c0f73c595e303945e11dc0969da35f5fef96823668f696b82923e9\"\r\n}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash 4 wagering",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29ff50c8-3cab-44d9-ada8-66df8eb531b6",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"    \r",
+							"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].gameName).to.eql(\"CASH 4\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking for draw id \"+jsonData[0].drawId, () => {\r",
+							"\r",
+							"        pm.expect(jsonData[0].drawId).to.eql(\"50\");\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a64290bc-186e-4625-8a09-e35a0ab03a2c",
+						"exec": [
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   {\r\n  \"type\":\"NORMAL\",\r\n  \"duration\":1,\r\n  \"gameName\":\"CASH 4\",\r\n  \"price\":50,\r\n  \"stake\":50,\r\n  \"boards\":\r\n  [\r\n    {\r\n      \"primarySelections\":[\"2\",\"5\",\"6\",\"7\"],\r\n      \"betType\":\"Str\",\r\n      \"quickpick\":false,\r\n      \"multiplier\":false\r\n    }\r\n  ],\r\n  \"drawNames\": [\r\n    \"MIDDAY\"\r\n  ],\r\n  \"delay\":0,\r\n  \"digest\":\"568e82530935a82870aa5979883bd7348fdd66c3a0cf772205d36ac267c16a16\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"wagers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

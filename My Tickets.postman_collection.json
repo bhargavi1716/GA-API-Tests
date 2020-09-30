@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "7264f319-507c-446f-8f58-5661cb62526b",
+		"name": "My Tickets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9cf12786-6adb-41e4-94ba-ed36f734645b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"authCode\");\r",
+							"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
+							"\r",
+							"pm.test(\"authCode is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n   \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/login",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"login"
+					]
+				},
+				"description": "POSTRequest, gives auth code"
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d4bd3e6-a6d7-42da-abb2-d222bf15d750",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"refreshToken\");\r",
+							"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
+							"pm.environment.unset(\"oAuthToken\");\r",
+							"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"tokenType is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"tokenType\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token is present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is REFRESH\", function() {\r",
+							"    pm.expect(jsonData[0].tokenType).to.eql(\"REFRESH\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"token type is OAuth\", function() {\r",
+							"  pm.expect(jsonData[1].tokenType).to.eql(\"OAuth\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dd79b646-768d-4fcb-ba3e-6e941058e470",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",    \r\n    \"authCode\": \"{{authCode}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"self",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Tickets",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3480d89e-bb5d-4bbe-abb3-369b90eed724",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+							"console.log(\"---------------------\");\r",
+							"console.log(\"prerequest script\");\r",
+							"console.log(headervalue);\r",
+							"console.log(pm.request.headers.get('Authorization'));\r",
+							"console.log(\"---------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/players/self/transactions/lottery",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"players",
+						"self",
+						"transactions",
+						"lottery"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

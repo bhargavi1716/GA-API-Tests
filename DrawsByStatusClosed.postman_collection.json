@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "fa93aa48-6ba6-4f78-ac03-e052459e7dd8",
+		"name": "DrawsByStatusClosed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get CASH POP Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4a18641-2340-492a-bbfa-f20c0df01852",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH POP\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=CASH POP&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "CASH POP"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get KENO Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "405d6bec-0fea-4e62-85b6-8b59c926b452",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"KENO!\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=KENO!&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "KENO!"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get GEORGIA FIVE Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bd45909-661e-4dd6-b1d0-b3c6f0e9e19f",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"GEROGIA FIVE\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=GEROGIA FIVE&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "GEROGIA FIVE"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get MEGA MILLIONS Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0990e044-5e84-44af-a0f7-f600d6a50550",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"MEGA MILLIONS\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=MEGA MILLIONS&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "MEGA MILLIONS"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH 4 Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e378ef2-91a6-47a8-b168-9f99b013b1fa",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH 4\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=CASH 4&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "CASH 4"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CASH 3 Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "388d9cae-281f-4cd8-8bd1-0ee6db16916a",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH 3\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=CASH 3&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "CASH 3"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get POWERBALL Closed Draws",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6aba3fa-095e-4d3d-a737-401315c0e677",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+							"    \r",
+							"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+							"\r",
+							"        pm.expect(jsonData.draws[i].gameName).to.eql(\"POWERBALL\");\r",
+							"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+							"    \r",
+							"    });\r",
+							"   \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?game-names=POWERBALL&status=CLOSED",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"draw-games",
+						"draws",
+						"page"
+					],
+					"query": [
+						{
+							"key": "game-names",
+							"value": "POWERBALL"
+						},
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

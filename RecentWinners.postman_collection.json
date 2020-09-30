@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "6f410f52-2651-4321-af40-998040ec0f8e",
+		"name": "RecentWinners",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Diggi Games Recent Winners",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/games/recent-winners/?pageNumber=1&pageSize=500&minWinAmount=100&gamePlatforms=62",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"games",
+						"recent-winners",
+						""
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "500"
+						},
+						{
+							"key": "minWinAmount",
+							"value": "100"
+						},
+						{
+							"key": "gamePlatforms",
+							"value": "62"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash Pop Recent Winners",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/draw-games/winners?page=1&size=60&sort-by=DRAW_DATE&sort-ascending=false&minimal-win-amount=10&game-names=CASH+POP&win-tier=LOW_TIER&win-type=CASH",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"draw-games",
+						"winners"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "60"
+						},
+						{
+							"key": "sort-by",
+							"value": "DRAW_DATE"
+						},
+						{
+							"key": "sort-ascending",
+							"value": "false"
+						},
+						{
+							"key": "minimal-win-amount",
+							"value": "10"
+						},
+						{
+							"key": "game-names",
+							"value": "CASH+POP"
+						},
+						{
+							"key": "win-tier",
+							"value": "LOW_TIER"
+						},
+						{
+							"key": "win-type",
+							"value": "CASH"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "09bcaf04-fb4e-4c82-b75f-54b107c7f35f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cab315f4-56df-45e7-ac34-a7a11ca70744",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

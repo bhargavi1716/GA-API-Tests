@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "9f4a9631-d43f-49a3-98f5-9103c5fd65c3",
+		"name": "GetConsents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Consents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "919ac5fa-cd38-4dee-ba7c-7540975cb3ed",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"\r",
+							"pm.test(\"checking for id\", function() {\r",
+							"    pm.expect(jsonData.id).to.eql(9);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"checking for TERMS AND CONDITIONS\", function() {\r",
+							"    pm.expect(jsonData.name).to.eql(\"Term & Condition\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v1/players/consents",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"players",
+						"consents"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c8d380f3-3e5b-43fd-910b-053c452daad2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3e3ce3d7-546d-416b-98ef-0a8bbe7ff2ca",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
