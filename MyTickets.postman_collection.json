@@ -1,8 +1,7 @@
 {
 	"info": {
-		"_postman_id": "53bd5441-1fe8-4d10-9fa4-64b75b2b1cf5",
-		"name": "Logout Success",
-		"description": "Login - Generate Token - Logout",
+		"_postman_id": "7264f319-507c-446f-8f58-5661cb62526b",
+		"name": "MyTickets",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,15 +11,11 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0cb89d60-e5b3-46f8-b994-43f0b53d7207",
+						"id": "9cf12786-6adb-41e4-94ba-ed36f734645b",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);\r",
 							"pm.environment.unset(\"authCode\");\r",
 							"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
-							"\r",
-							"console.log(\"-----------------\");\r",
-							"console.log(\"AuthCode =\", jsonData[0].authCode)\r",
-							"console.log(\"-----------------\");\r",
 							"\r",
 							"pm.test(\"authCode is present\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
@@ -39,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"siteId\": \"{{siteId}}\",\r\n   \"clientId\": \"{{clientIdMobile}}\",\r\n   \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
+					"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n   \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -68,18 +63,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a8a1bd17-a0e0-4513-947e-618c9c931e8c",
+						"id": "6d4bd3e6-a6d7-42da-abb2-d222bf15d750",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);\r",
 							"pm.environment.unset(\"refreshToken\");\r",
 							"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
 							"pm.environment.unset(\"oAuthToken\");\r",
 							"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
-							"\r",
-							"console.log(\"-----------------oAuth and then Refresh\");\r",
-							"console.log(jsonData[1].token);\r",
-							"console.log(jsonData[0].token);\r",
-							"console.log(\"-----------------\");\r",
 							"\r",
 							"pm.test(\"Status code is 200\", () => {\r",
 							"  pm.response.to.have.status(200);\r",
@@ -111,7 +101,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "e19fc482-45cf-4222-980e-1ad5282f52a6",
+						"id": "dd79b646-768d-4fcb-ba3e-6e941058e470",
 						"exec": [
 							""
 						],
@@ -151,39 +141,24 @@
 			"response": []
 		},
 		{
-			"name": "Logout",
+			"name": "My Tickets",
 			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1f32fe63-c0b6-4a14-9825-436b064dfbd8",
-						"exec": [
-							"pm.test(\"Status code is 204\", () => {\r",
-							"  pm.response.to.have.status(204);\r",
-							"});\r",
-							"\r",
-							"console.log(\"-----------------\");\r",
-							"const oAuthinLogOut = pm.environment.get(\"oAuthToken\");\r",
-							"console.log(oAuthinLogOut);\r",
-							"console.log(pm.request.headers.get('Authorization'));\r",
-							"console.log(\"-----------------\");"
-						],
-						"type": "text/javascript"
-					}
-				},
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "3d2d1307-97ab-4d33-bb35-574837aca85a",
+						"id": "3480d89e-bb5d-4bbe-abb3-369b90eed724",
 						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
 							"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
 							"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
 							"console.log(\"---------------------\");\r",
 							"console.log(\"prerequest script\");\r",
 							"console.log(headervalue);\r",
 							"console.log(pm.request.headers.get('Authorization'));\r",
-							"console.log(\"---------------------\");\r",
-							""
+							"console.log(\"---------------------\");"
 						],
 						"type": "text/javascript"
 					}
@@ -193,28 +168,20 @@
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n   \"siteId\": \"{{siteId}}\",\r\n   \"scope\": null,\r\n   \"clientId\": \"{{clientIdMobile}}\",\r\n   \"clientCredentials\": null,\r\n   \"authCode\": null,\r\n   \"token\": \"{{oAuthToken}}\",\r\n   \"tokenType\": \"OAuth\",\r\n   \"tokenParams\":    {\r\n      \"expiresIn\": \"900\",\r\n      \"issueTime\": \"1564702557532\"\r\n   },\r\n   \"resourceOwnerCredentials\": null\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+					"raw": "{{mobileendpoint}}/api/v1/players/self/transactions/lottery",
 					"host": [
 						"{{mobileendpoint}}"
 					],
 					"path": [
 						"api",
 						"v1",
-						"oauth",
+						"players",
 						"self",
-						"tokens"
+						"transactions",
+						"lottery"
 					]
 				}
 			},
@@ -225,7 +192,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f1b64102-55be-4eb5-a0a0-41511e769143",
+				"id": "97de0f16-e4d9-4341-95ed-1a8dbdaf4cb3",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -235,7 +202,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b6f6f76b-4537-4d94-b4d1-62348a9e15f8",
+				"id": "7a3b4f41-03b3-4ac8-b77c-42e2a5849122",
 				"type": "text/javascript",
 				"exec": [
 					""

@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "2b2d5210-c864-4f94-b049-ff51205f6756",
-		"name": "View Games",
+		"name": "ViewGames",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
