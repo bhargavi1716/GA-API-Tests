@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "fd3e4d0c-b5ba-43d0-88c2-39683be8a4cb",
-		"name": "CAT Smoke",
+		"name": "CATSmoke",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -850,47 +850,47 @@
 	],
 	"variable": [
 		{
-			"id": "c560b1d7-019e-41a3-8165-5e430b6467c3",
+			"id": "b25652ec-7b03-4a18-97a9-31d8376b828c",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "f65bdd62-6fa4-4b64-9fe1-1358806f78d2",
+			"id": "2484e9e0-b88e-4b4a-bcb1-bd3330d6c8b0",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "1110f581-2c99-47ac-862d-3d0857f86ffe",
+			"id": "74712168-212a-4154-b07a-9c809be8cb8f",
 			"key": "mobilephone",
 			"value": "8481971818"
 		},
 		{
-			"id": "d74fdc6e-985c-4a03-bc37-5b4bca3a4de0",
+			"id": "fb8999ff-2dbb-4d41-9188-95e9f446e498",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "d1f9b5c5-3929-4957-aaf2-833514d89206",
+			"id": "f0d53670-0e60-4d3f-ba64-f109f9fbb4ee",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "be2f1b5d-ae21-4198-815f-f46d48445ca6",
+			"id": "88f09744-7c01-4a05-9df0-d06b128ae184",
 			"key": "streetaddress",
 			"value": "maeppl kilpop"
 		},
 		{
-			"id": "b16b3e4c-0916-4ad0-bfc4-0969474429fa",
+			"id": "3f12b0f8-debc-42a5-9940-0f300119e7c7",
 			"key": "instructionid",
 			"value": 907
 		},
 		{
-			"id": "37720696-b558-4fb9-beb3-cb08c3fafb5a",
+			"id": "cec70f78-f2d0-43d2-9230-aa0d65801896",
 			"key": "password",
 			"value": "Password1"
 		},
 		{
-			"id": "bb9309d4-9dfa-4e9b-aae0-668d579ecffc",
+			"id": "8a789d10-b4ba-4e9a-84cc-f0f011e1567a",
 			"key": "username",
 			"value": "pbwqkywkyo@mailinator.com"
 		}
