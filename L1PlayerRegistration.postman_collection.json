@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "9f1fee86-6f42-4f43-8754-a5247f88ef6d",
+		"name": "L1PlayerRegistration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "L1 Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b42d8420-e2f5-4a04-8081-598c23694cf3",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "97bde997-3e5f-40de-9952-676e711b2623",
+						"exec": [
+							"function getRandomText(length) {\r",
+							"  var charset = \"abcdefghijklmnopqrstuvwxyz\".match(/./g);\r",
+							"  var result = \"\";\r",
+							"  for (var i = 0; i < length; i++) \r",
+							"      result += charset[Math.floor(Math.random() * charset.length)];\r",
+							"  //console.log(result);\r",
+							"  return result;\r",
+							"}\r",
+							"\r",
+							"var firstName = getRandomText(8);\r",
+							"var lastName = getRandomText(8);\r",
+							"var suffix = \"Jr.\";\r",
+							"var password = \"Password1\";\r",
+							"var email = getRandomText(10) + \"@mailinator.com\";\r",
+							"\r",
+							"// console.log(firstName);\r",
+							"// console.log(lastName);\r",
+							"// console.log(suffix);\r",
+							"console.log(password);\r",
+							"console.log(email);\r",
+							"\r",
+							"pm.variables.unset(\"firstName\");\r",
+							"pm.variables.set(\"firstName\",firstName);\r",
+							"\r",
+							"pm.variables.unset(\"lastName\");\r",
+							"pm.variables.set(\"lastName\",lastName);\r",
+							"\r",
+							"pm.variables.unset(\"suffix\");\r",
+							"pm.variables.set(\"suffix\",suffix);\r",
+							"\r",
+							"pm.variables.unset(\"password\");\r",
+							"pm.variables.set(\"password\",password);\r",
+							"\r",
+							"pm.variables.unset(\"email\");\r",
+							"pm.variables.set(\"email\",email);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-EXECUTE-SYNC",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"personalInfo\": {\r\n        \"firstName\": \"{{firstName}}\",\r\n        \"lastName\": \"{{lastName}}\",\r\n        \"suffix\": \"{{suffix}}\",\r\n        \"emails\": {\r\n            \"PERSONAL\": {\r\n                \"address\": \"{{email}}\",\r\n                \"type\": \"PERSONAL\",\r\n                \"verified\": false\r\n            }\r\n        },\r\n        \"dateOfBirth\": 631152000243,\r\n        \"passwordHints\": [\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"In what city were you born?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"sattenapalli\"\r\n                }\r\n            },\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What was the make of your first car?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"dzire\"\r\n                }\r\n            }\r\n        ],\r\n        \"citizenship\": \"RESIDENT\"\r\n    },\r\n    \"password\": \"{{password}}\",\r\n    \"profile\": {\r\n        \"notificationPreferences\": [\r\n            {\r\n                \"eventType\": \"OffersAndUpdates\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"JackpotAlerts\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"Coupons\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"DailyAndWinningNumbers\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            }\r\n        ],\r\n        \"userName\": \"{{email}}\",\r\n        \"registrationLevel\": 5,\r\n        \"language\": \"en_US\",\r\n        \"preferredCurrency\": \"USD\"\r\n    },\r\n   \"consents\": [\r\n        {\r\n            \"id\": \"9\",\r\n            \"version\": \"{{T&C Version}}\",\r\n            \"nextVersion\": null,\r\n            \"enabled\": true,\r\n            \"requiresConsent\": null,\r\n            \"updateDate\": 1601968353153,\r\n            \"language\": \"en_US\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/players/",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"players",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

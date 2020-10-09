@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "0904078c-e3ee-44b2-b305-10fc8197ba4e",
+		"name": "L2PlayerRegistration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "L2 Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f496bbf-0359-4b82-a36b-80b48aceff47",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7303bb1b-a47a-4419-8abe-38c67e6e9fc3",
+						"exec": [
+							"function getRandomText(length) {\r",
+							"  var charset = \"abcdefghijklmnopqrstuvwxyz\".match(/./g);\r",
+							"  var result = \"\";\r",
+							"  for (var i = 0; i < length; i++) \r",
+							"      result += charset[Math.floor(Math.random() * charset.length)];\r",
+							"  //console.log(result);\r",
+							"  return result;\r",
+							"}\r",
+							"\r",
+							"function getRandomNumber(length) {\r",
+							"  var charset = \"0123456789\".match(/./g);\r",
+							"  var result = \"\";\r",
+							"  for (var i = 0; i < length; i++) \r",
+							"      result += charset[Math.floor(Math.random() * charset.length)];\r",
+							"  //console.log(result);\r",
+							"  return result;\r",
+							"}\r",
+							"\r",
+							"var firstName = getRandomText(8);\r",
+							"var lastName = getRandomText(8);\r",
+							"var suffix = \"Jr.\";\r",
+							"var password = \"Password1\";\r",
+							"var email = getRandomText(10) + \"@mailinator.com\";\r",
+							"\r",
+							"var address1 = getRandomText(6);\r",
+							"var address2 = getRandomText(6);\r",
+							"var postalCode = \"30004\";\r",
+							"var city = \"Alpharetta\";\r",
+							"var state = \"GA\";\r",
+							"var HOME = getRandomNumber(10);\r",
+							"var MOBILE = getRandomNumber(10);\r",
+							"var socialSecurityNumber = getRandomNumber(4);\r",
+							"\r",
+							"// console.log(firstName);\r",
+							"// console.log(lastName);\r",
+							"// console.log(suffix);\r",
+							"console.log(password);\r",
+							"console.log(email);\r",
+							"\r",
+							"pm.variables.unset(\"firstName\");\r",
+							"pm.variables.set(\"firstName\",firstName);\r",
+							"\r",
+							"pm.variables.unset(\"lastName\");\r",
+							"pm.variables.set(\"lastName\",lastName);\r",
+							"\r",
+							"pm.variables.unset(\"suffix\");\r",
+							"pm.variables.set(\"suffix\",suffix);\r",
+							"\r",
+							"pm.variables.unset(\"password\");\r",
+							"pm.variables.set(\"password\",password);\r",
+							"\r",
+							"pm.variables.unset(\"email\");\r",
+							"pm.variables.set(\"email\",email);\r",
+							"\r",
+							"pm.variables.unset(\"address1\");\r",
+							"pm.variables.set(\"address1\",address1);\r",
+							"\r",
+							"pm.variables.unset(\"address2\");\r",
+							"pm.variables.set(\"address2\",address2);\r",
+							"\r",
+							"pm.variables.unset(\"postalCode\");\r",
+							"pm.variables.set(\"postalCode\",postalCode);\r",
+							"\r",
+							"pm.variables.unset(\"city\");\r",
+							"pm.variables.set(\"city\",city);\r",
+							"\r",
+							"pm.variables.unset(\"state\");\r",
+							"pm.variables.set(\"state\",state);\r",
+							"\r",
+							"pm.variables.unset(\"HOME\");\r",
+							"pm.variables.set(\"HOME\",HOME);\r",
+							"\r",
+							"pm.variables.unset(\"MOBILE\");\r",
+							"pm.variables.set(\"MOBILE\",MOBILE);\r",
+							"\r",
+							"pm.variables.unset(\"socialSecurityNumber\");\r",
+							"pm.variables.set(\"socialSecurityNumber\",socialSecurityNumber);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-EXECUTE-SYNC",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"personalInfo\": {\r\n        \"firstName\": \"{{firstName}}\",\r\n        \"lastName\": \"{{lastName}}\",\r\n        \"suffix\": \"{{suffix}}\",\r\n        \"dateOfBirth\": 703815400000,\r\n        \"citizenship\": \"RESIDENT\",\r\n        \"addresses\": {\r\n            \"MAILING\": {\r\n                \"address1\": \"{{address1}}\",\r\n                \"address2\": \"{{address2}}\",\r\n                \"type\": \"MAILING\",\r\n                \"postalCode\": \"{{postalCode}}\",\r\n                \"city\": \"{{city}}\",\r\n                \"state\": \"{{state}}\",\r\n                \"isoCountryCode\": \"US\"\r\n            }\r\n        },\r\n        \"phones\": {\r\n            \"HOME\": {\r\n                \"type\": \"HOME\",\r\n                \"number\": \"{{HOME}}\"\r\n            },\r\n            \"MOBILE\": {\r\n                \"type\": \"MOBILE\",\r\n                \"number\": \"{{MOBILE}}\"\r\n            }\r\n        },\r\n        \"emails\": {\r\n            \"PERSONAL\": {\r\n                \"type\": \"PERSONAL\",\r\n                \"address\": \"{{email}}\",\r\n                \"verified\": false\r\n            }\r\n        },\r\n        \"passwordHints\": [\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What was the make of your first car?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"tetd\"\r\n                }\r\n            },\r\n            {\r\n                \"securityQuestion\": {\r\n                    \"question\": \"What is your favorite song?\"\r\n                },\r\n                \"securityAnswer\": {\r\n                    \"answer\": \"uugsff\"\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    \"password\": \"{{password}}\",\r\n    \"nonpublicPersonalInfo\": {\r\n        \"dateOfBirth\": 703815400000,\r\n        \"socialSecurityNumber\": {{socialSecurityNumber}}\r\n    },\r\n    \"profile\": {\r\n        \"acceptTermsAndConditions\": true,\r\n        \"userName\": \"{{email}}\",\r\n        \"registrationLevel\": 2,\r\n        \"language\": \"en_US\",\r\n        \"preferredCurrency\": \"USD\",\r\n        \"notificationPreferences\": [\r\n            {\r\n                \"eventType\": \"OffersAndUpdates\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"JackpotAlerts\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"Coupons\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"eventType\": \"DailyAndWinningNumbers\",\r\n                \"channels\": {\r\n                    \"EMAIL\": {\r\n                        \"type\": \"EMAIL\",\r\n                        \"enabled\": true\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    },\r\n     \"consents\": [\r\n        {\r\n            \"id\": \"9\",\r\n            \"version\": \"{{T&C Version}}\",\r\n            \"nextVersion\": null,\r\n            \"enabled\": true,\r\n            \"requiresConsent\": null,\r\n            \"updateDate\": 1601968353153,\r\n            \"language\": \"en_US\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mobileendpoint}}/api/v2/players/",
+					"host": [
+						"{{mobileendpoint}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"players",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "90bde15b-e38d-42b6-9ae5-d53770eee68c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d1c7fa7-0ceb-45aa-8ff4-e20144ea36bb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
