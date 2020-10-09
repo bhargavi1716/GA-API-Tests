@@ -15,7 +15,26 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", () => {\r",
 							"  pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.test(\"Checking first name in the response\", function() {\r",
+							"    pm.expect(jsonData.personalInfo.firstName).to.eql(pm.variables.get(\"firstName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking last name in the response\", function() {\r",
+							"    pm.expect(jsonData.personalInfo.lastName).to.eql(pm.variables.get(\"lastName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking email in the response\", function() {\r",
+							"    pm.expect(jsonData.personalInfo.emails.PERSONAL.address).to.eql(pm.variables.get(\"email\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking Password in the response\", function() {\r",
+							"    pm.expect(jsonData.password).to.eql(pm.variables.get(\"password\"));\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
