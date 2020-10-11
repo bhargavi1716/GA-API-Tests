@@ -72,14 +72,14 @@
 									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
-									"var username = jsonData.personalInfo.emails.PERSONAL.address;\r",
-									"var password = jsonData.password;\r",
+									"var regUsername = jsonData.personalInfo.emails.PERSONAL.address;\r",
+									"var regPassword = jsonData.password;\r",
 									"\r",
-									"pm.collectionVariables.unset(\"username\");\r",
-									"pm.collectionVariables.set(\"username\",username);\r",
+									"pm.collectionVariables.unset(\"regUsername\");\r",
+									"pm.collectionVariables.set(\"regUsername\",regUsername);\r",
 									"\r",
-									"pm.collectionVariables.unset(\"password\");\r",
-									"pm.collectionVariables.set(\"password\",password);\r",
+									"pm.collectionVariables.unset(\"regPassword\");\r",
+									"pm.collectionVariables.set(\"regPassword\",regPassword);\r",
 									"\r",
 									"pm.test(\"Checking first name in the response\", function() {\r",
 									"    pm.expect(jsonData.personalInfo.firstName).to.eql(pm.variables.get(\"firstName\"));\r",
@@ -262,17 +262,14 @@
 							"script": {
 								"id": "805a70a2-0dc2-4f09-a1ce-b412cb35b98d",
 								"exec": [
-									"var username = \"\";\r",
-									"var password = \"\";\r",
+									"var regUsername = \"\";\r",
+									"var regPassword = \"\";\r",
 									"\r",
-									"username = pm.collectionVariables.get(\"username\");\r",
-									"password = pm.collectionVariables.get(\"password\");\r",
+									"regUsername = pm.collectionVariables.get(\"regUsername\");\r",
+									"regPassword = pm.collectionVariables.get(\"regPassword\");\r",
 									"\r",
-									"console.log(pm.collectionVariables.get(\"username\"));\r",
-									"console.log(pm.collectionVariables.get(\"password\"));\r",
-									"\r",
-									"\r",
-									""
+									"console.log(pm.collectionVariables.get(\"regUsername\"));\r",
+									"console.log(pm.collectionVariables.get(\"regPassword\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -283,7 +280,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n    \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{password}}\"\r\n   }\r\n   \r\n}",
+							"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n    \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{regUsername}}\",\r\n      \"PASSWORD\": \"{{regPassword}}\"\r\n   }\r\n   \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -576,12 +573,14 @@
 									"});\r",
 									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
+									"console.log(\"************************\");\r",
+									"console.log(\"jsonData.data.customerData.username \"+ jsonData.data.customerData.username);\r",
+									"console.log(\"pm.collectionVariables.get(regUsername) \" + pm.collectionVariables.get(\"regUsername\"));\r",
+									"console.log(\"************************\");\r",
 									"\r",
 									"pm.test(\"checking for username\", function () {\r",
-									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.collectionVariables.get(\"username\"));\r",
-									"});\r",
-									"\r",
-									""
+									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.collectionVariables.get(\"regUsername\"));\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -649,9 +648,7 @@
 								"id": "db0101fe-fd1a-4c96-8d40-9ce967b581ac",
 								"exec": [
 									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
-									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
-									"\r",
-									""
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
 								],
 								"type": "text/javascript"
 							}
@@ -850,49 +847,49 @@
 	],
 	"variable": [
 		{
-			"id": "b25652ec-7b03-4a18-97a9-31d8376b828c",
+			"id": "134b9f44-b9f6-4e94-926d-04bf31015ffb",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "2484e9e0-b88e-4b4a-bcb1-bd3330d6c8b0",
+			"id": "896a9632-c754-48fb-918a-91c681c4e392",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "74712168-212a-4154-b07a-9c809be8cb8f",
+			"id": "396fe92d-2aad-4b8c-aad1-7348c5053c5f",
 			"key": "mobilephone",
-			"value": "8481971818"
+			"value": "7883466219"
 		},
 		{
-			"id": "fb8999ff-2dbb-4d41-9188-95e9f446e498",
+			"id": "5419d4bb-d062-4a92-ba0c-65b97688d8b9",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "f0d53670-0e60-4d3f-ba64-f109f9fbb4ee",
+			"id": "bac1c954-e97b-4bfa-9c50-912fe2895a4b",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "88f09744-7c01-4a05-9df0-d06b128ae184",
+			"id": "b06c5c0f-dc89-4532-8a5e-087e243b6b78",
 			"key": "streetaddress",
-			"value": "maeppl kilpop"
+			"value": "annvnr fqnoir"
 		},
 		{
-			"id": "3f12b0f8-debc-42a5-9940-0f300119e7c7",
+			"id": "1e3d326c-76b8-4d21-9739-35e8c2efd53e",
 			"key": "instructionid",
 			"value": 907
 		},
 		{
-			"id": "cec70f78-f2d0-43d2-9230-aa0d65801896",
+			"id": "4b413fa4-6234-4b2e-918f-dd40da9c4abb",
 			"key": "password",
 			"value": "Password1"
 		},
 		{
-			"id": "8a789d10-b4ba-4e9a-84cc-f0f011e1567a",
+			"id": "35290aa3-d646-486d-9dc7-4da6b0ac6f87",
 			"key": "username",
-			"value": "pbwqkywkyo@mailinator.com"
+			"value": "hulgbokqay@mailinator.com"
 		}
 	],
 	"protocolProfileBehavior": {}
