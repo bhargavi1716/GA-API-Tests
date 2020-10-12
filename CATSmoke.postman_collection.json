@@ -243,6 +243,10 @@
 							"script": {
 								"id": "11648513-0f63-45c7-b4d4-c40fb713fef9",
 								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
 									"pm.environment.unset(\"authCode\");\r",
 									"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
@@ -251,13 +255,9 @@
 									"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Status code is 200\", () => {\r",
-									"  pm.response.to.have.status(200);\r",
-									"});\r",
 									"\r",
-									"console.log(\"coming to log\")\r",
 									"\r",
-									""
+									"console.log(\"coming to log\")"
 								],
 								"type": "text/javascript"
 							}
@@ -315,15 +315,16 @@
 							"script": {
 								"id": "dd3080ae-5995-4da7-9ad5-d65646063940",
 								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
 									"pm.environment.unset(\"refreshToken\");\r",
 									"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
 									"pm.environment.unset(\"oAuthToken\");\r",
 									"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
 									"\r",
-									"pm.test(\"Status code is 200\", () => {\r",
-									"  pm.response.to.have.status(200);\r",
-									"});\r",
 									"\r",
 									"pm.test(\"tokenType is present\", function () {\r",
 									"    pm.expect(pm.response.text()).to.include(\"tokenType\");\r",
@@ -497,6 +498,10 @@
 							"script": {
 								"id": "ea4d9781-e393-4fc5-a8b2-5be469c887d0",
 								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
 									"pm.environment.unset(\"onePayToken\");\r",
 									"pm.environment.set(\"onePayToken\",jsonData.token);\r",
@@ -505,9 +510,7 @@
 									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Status code is 200\", () => {\r",
-									"  pm.response.to.have.status(200);\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -838,39 +841,49 @@
 	],
 	"variable": [
 		{
-			"id": "18a37801-bb0e-4d22-9eed-694f3e0cbb96",
+			"id": "8083de0b-f912-496e-b419-cc4eb394cf9c",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "23832934-e6b1-44b2-8164-b5a2fc2516c6",
+			"id": "ea18dbd1-c2c7-47a9-be9c-43a116499017",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "07c2e670-e570-45ea-ae8f-a14a799826d7",
+			"id": "1f5e14dc-7ccc-4975-aebf-0c710ef0d9a1",
 			"key": "mobilephone",
 			"value": "1171216632"
 		},
 		{
-			"id": "9b31fbe1-50a9-461d-88ca-5371003884f5",
+			"id": "003bb3fd-73e9-4fca-b174-d532e7a930ca",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "3a923c66-61e9-4333-b199-d5f6abd3ca4a",
+			"id": "bdf2c208-e3bb-4c9e-b948-08ddefc44ac7",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "bb780a8f-af4c-416b-98a4-9468ee3676ea",
+			"id": "87c27b2d-90a0-4363-b632-d39289e10cc9",
 			"key": "streetaddress",
 			"value": "afpcda icwfuh"
 		},
 		{
-			"id": "bba90807-d20e-44c0-a503-2a4966f2c0df",
+			"id": "746bd95f-2221-45d0-9741-31f94f02789d",
 			"key": "instructionid",
 			"value": 907
+		},
+		{
+			"id": "683002f1-4720-4739-b7da-aaa06965ec41",
+			"key": "regPassword",
+			"value": "Password1"
+		},
+		{
+			"id": "830208b1-b2ae-40e1-90f1-3f6803accf87",
+			"key": "regUserName",
+			"value": "ioeckhlbff@mailinator.com"
 		}
 	],
 	"protocolProfileBehavior": {}
