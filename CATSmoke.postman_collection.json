@@ -72,14 +72,14 @@
 									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
-									"var regUsername = jsonData.personalInfo.emails.PERSONAL.address;\r",
-									"var regPassword = jsonData.password;\r",
+									"// var regUsername = jsonData.personalInfo.emails.PERSONAL.address;\r",
+									"// var regPassword = jsonData.password;\r",
 									"\r",
-									"pm.collectionVariables.unset(\"regUsername\");\r",
-									"pm.collectionVariables.set(\"regUsername\",regUsername);\r",
+									"// pm.collectionVariables.unset(\"regUsername\");\r",
+									"// pm.collectionVariables.set(\"regUsername\",regUsername);\r",
 									"\r",
-									"pm.collectionVariables.unset(\"regPassword\");\r",
-									"pm.collectionVariables.set(\"regPassword\",regPassword);\r",
+									"// pm.collectionVariables.unset(\"regPassword\");\r",
+									"// pm.collectionVariables.set(\"regPassword\",regPassword);\r",
 									"\r",
 									"pm.test(\"Checking first name in the response\", function() {\r",
 									"    pm.expect(jsonData.personalInfo.firstName).to.eql(pm.variables.get(\"firstName\"));\r",
@@ -148,6 +148,9 @@
 									"\r",
 									"console.log(email);\r",
 									"console.log(password);\r",
+									"\r",
+									"pm.collectionVariables.set(\"regUserName\",email)\r",
+									"pm.collectionVariables.set(\"regPassword\",password)\r",
 									"\r",
 									"\r",
 									"pm.variables.unset(\"firstName\");\r",
@@ -252,6 +255,8 @@
 									"  pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"console.log(\"coming to log\")\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -262,13 +267,12 @@
 							"script": {
 								"id": "805a70a2-0dc2-4f09-a1ce-b412cb35b98d",
 								"exec": [
-									"var regUsername = \"\";\r",
-									"var regPassword = \"\";\r",
 									"\r",
-									"regUsername = pm.collectionVariables.get(\"regUsername\");\r",
+									"\r",
+									"regUserName = pm.collectionVariables.get(\"regUserName\");  \r",
 									"regPassword = pm.collectionVariables.get(\"regPassword\");\r",
 									"\r",
-									"console.log(pm.collectionVariables.get(\"regUsername\"));\r",
+									"console.log(pm.collectionVariables.get(\"regUserName\"));\r",
 									"console.log(pm.collectionVariables.get(\"regPassword\"));"
 								],
 								"type": "text/javascript"
@@ -280,7 +284,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n    \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{regUsername}}\",\r\n      \"PASSWORD\": \"{{regPassword}}\"\r\n   }\r\n   \r\n}",
+							"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n    \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{regUserName}}\",\r\n      \"PASSWORD\": \"{{regPassword}}\"\r\n   }\r\n   \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -452,11 +456,7 @@
 								"exec": [
 									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
 									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
-									"console.log(\"---------------------\");\r",
-									"console.log(\"prerequest script\");\r",
-									"console.log(headervalue);\r",
-									"console.log(pm.request.headers.get('Authorization'));\r",
-									"console.log(\"---------------------\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -579,7 +579,7 @@
 									"console.log(\"************************\");\r",
 									"\r",
 									"pm.test(\"checking for username\", function () {\r",
-									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.collectionVariables.get(\"regUsername\"));\r",
+									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.collectionVariables.get(\"regUserName\"));\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -760,12 +760,7 @@
 									"pm.test(\"Status code is 204\", () => {\r",
 									"  pm.response.to.have.status(204);\r",
 									"});\r",
-									"\r",
-									"console.log(\"-----------------\");\r",
-									"const oAuthinLogOut = pm.environment.get(\"oAuthToken\");\r",
-									"console.log(oAuthinLogOut);\r",
-									"console.log(pm.request.headers.get('Authorization'));\r",
-									"console.log(\"-----------------\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -777,11 +772,7 @@
 								"exec": [
 									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
 									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
-									"console.log(\"---------------------\");\r",
-									"console.log(\"prerequest script\");\r",
-									"console.log(headervalue);\r",
-									"console.log(pm.request.headers.get('Authorization'));\r",
-									"console.log(\"---------------------\");\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -847,49 +838,39 @@
 	],
 	"variable": [
 		{
-			"id": "134b9f44-b9f6-4e94-926d-04bf31015ffb",
+			"id": "18a37801-bb0e-4d22-9eed-694f3e0cbb96",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "896a9632-c754-48fb-918a-91c681c4e392",
+			"id": "23832934-e6b1-44b2-8164-b5a2fc2516c6",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "396fe92d-2aad-4b8c-aad1-7348c5053c5f",
+			"id": "07c2e670-e570-45ea-ae8f-a14a799826d7",
 			"key": "mobilephone",
-			"value": "7883466219"
+			"value": "1171216632"
 		},
 		{
-			"id": "5419d4bb-d062-4a92-ba0c-65b97688d8b9",
+			"id": "9b31fbe1-50a9-461d-88ca-5371003884f5",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "bac1c954-e97b-4bfa-9c50-912fe2895a4b",
+			"id": "3a923c66-61e9-4333-b199-d5f6abd3ca4a",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "b06c5c0f-dc89-4532-8a5e-087e243b6b78",
+			"id": "bb780a8f-af4c-416b-98a4-9468ee3676ea",
 			"key": "streetaddress",
-			"value": "annvnr fqnoir"
+			"value": "afpcda icwfuh"
 		},
 		{
-			"id": "1e3d326c-76b8-4d21-9739-35e8c2efd53e",
+			"id": "bba90807-d20e-44c0-a503-2a4966f2c0df",
 			"key": "instructionid",
 			"value": 907
-		},
-		{
-			"id": "4b413fa4-6234-4b2e-918f-dd40da9c4abb",
-			"key": "password",
-			"value": "Password1"
-		},
-		{
-			"id": "35290aa3-d646-486d-9dc7-4da6b0ac6f87",
-			"key": "username",
-			"value": "hulgbokqay@mailinator.com"
 		}
 	],
 	"protocolProfileBehavior": {}
