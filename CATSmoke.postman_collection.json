@@ -503,8 +503,8 @@
 									"});\r",
 									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
-									"pm.environment.unset(\"onePayToken\");\r",
-									"pm.environment.set(\"onePayToken\",jsonData.token);\r",
+									"pm.collectionVariables.unset(\"OnePayToken\");\r",
+									"pm.collectionVariables.set(\"OnePayToken\",jsonData.token);\r",
 									"\r",
 									"pm.test(\"One Pay Token is present\", function () {\r",
 									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
@@ -553,37 +553,37 @@
 					"name": "ValidateSession",
 					"event": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "6422b1b4-85dd-4200-9776-767cb60fefc2",
-								"exec": [
-									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
-									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
-									"\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
 							"listen": "test",
 							"script": {
-								"id": "313f424a-3498-47f6-aca9-9664ea9173d8",
+								"id": "8d161b07-8e66-4fe3-9711-5475a64dfbb4",
 								"exec": [
 									"pm.test(\"Status code is 200\", () => {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
 									"var jsonData = JSON.parse(responseBody);\r",
-									"console.log(\"************************\");\r",
-									"console.log(\"jsonData.data.customerData.username \"+ jsonData.data.customerData.username);\r",
-									"console.log(\"pm.collectionVariables.get(regUsername) \" + pm.collectionVariables.get(\"regUsername\"));\r",
-									"console.log(\"************************\");\r",
+									"// console.log(\"************************\");\r",
+									"// console.log(\"jsonData.data.customerData.username \"+ jsonData.data.customerData.username);\r",
+									"// console.log(\"pm.collectionVariables.get(regUsername) \" + pm.collectionVariables.get(\"regUsername\"));\r",
+									"// console.log(\"************************\");\r",
 									"\r",
 									"pm.test(\"checking for username\", function () {\r",
 									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.collectionVariables.get(\"regUserName\"));\r",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "81f7ebe1-01ec-47c3-8ff3-05c20f62b255",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -594,7 +594,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{  \r\n    \"systemId\":\"1\",\r\n    \"temporarySessionId\":\"{{onePayToken}}\"\r\n}",
+							"raw": "{  \r\n    \"systemId\":\"1\",\r\n    \"temporarySessionId\":\"{{OnePayToken}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -841,49 +841,49 @@
 	],
 	"variable": [
 		{
-			"id": "8083de0b-f912-496e-b419-cc4eb394cf9c",
+			"id": "dcde0230-7e66-42ca-ac5e-e25d6c361964",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "ea18dbd1-c2c7-47a9-be9c-43a116499017",
+			"id": "b2206871-fd3b-4258-b72b-3f194be05174",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "1f5e14dc-7ccc-4975-aebf-0c710ef0d9a1",
+			"id": "fdee4a2b-1a96-473e-8248-9ccfffd08060",
 			"key": "mobilephone",
 			"value": "1171216632"
 		},
 		{
-			"id": "003bb3fd-73e9-4fca-b174-d532e7a930ca",
+			"id": "4a37bbc6-2301-4be5-95ef-3eaff37ef4e3",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "bdf2c208-e3bb-4c9e-b948-08ddefc44ac7",
+			"id": "3ce03ffa-f1e0-471c-a40e-ee8a4748e649",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "87c27b2d-90a0-4363-b632-d39289e10cc9",
+			"id": "7ce0321a-7cdc-4567-a4e1-6f6b94af97ab",
 			"key": "streetaddress",
 			"value": "afpcda icwfuh"
 		},
 		{
-			"id": "746bd95f-2221-45d0-9741-31f94f02789d",
+			"id": "499d5cef-7afd-41a4-a4c7-129617a74995",
 			"key": "instructionid",
 			"value": 907
 		},
 		{
-			"id": "683002f1-4720-4739-b7da-aaa06965ec41",
+			"id": "088decd1-a40f-4253-9a0d-390e9b9d4fea",
 			"key": "regPassword",
 			"value": "Password1"
 		},
 		{
-			"id": "830208b1-b2ae-40e1-90f1-3f6803accf87",
+			"id": "e59d03ed-3d5e-4ab6-bb32-56dded3fbc96",
 			"key": "regUserName",
-			"value": "ioeckhlbff@mailinator.com"
+			"value": "vlgpxdtwbj@mailinator.com"
 		}
 	],
 	"protocolProfileBehavior": {}
