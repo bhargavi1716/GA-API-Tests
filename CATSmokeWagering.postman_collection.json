@@ -37,13 +37,7 @@
 							"script": {
 								"id": "93f5bb4d-71d7-4ff2-84b5-be81a851e1e3",
 								"exec": [
-									"\r",
-									"\r",
-									"regUserName = pm.collectionVariables.get(\"regUserName\");  \r",
-									"regPassword = pm.collectionVariables.get(\"regPassword\");\r",
-									"\r",
-									"console.log(pm.collectionVariables.get(\"regUserName\"));\r",
-									"console.log(pm.collectionVariables.get(\"regPassword\"));"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -739,7 +733,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"type\": \"NORMAL\",\r\n        \"duration\": 1,\r\n        \"gameName\": \"POWERBALL\",\r\n        \"price\": 200,\r\n        \"stake\": 200,\r\n        \"boards\": [\r\n            {\r\n                \"primarySelections\": [\r\n                    23,\r\n                    27,\r\n                    38,\r\n                    59,\r\n                    61\r\n                ],\r\n                \"secondarySelections\": [\r\n                    15\r\n                ],\r\n                \"quickPickCount\": 5,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"multiplier\": false,\r\n                \"quickpick\": false\r\n            }\r\n        ],\r\n        \"delay\": 0,   \r\n        \"digest\": \"d1b16b32a966d736bdfdfa07f385837033a1ad29a155d965b41c4b3b4ee91bd4\"\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"type\": \"NORMAL\",\r\n        \"duration\": 1,\r\n        \"gameName\": \"POWERBALL\",\r\n        \"price\": 200,\r\n        \"stake\": 200,\r\n        \"boards\": [\r\n            {\r\n                \"primarySelections\": [\r\n                    1,\r\n                    2,\r\n                    3,\r\n                    4,\r\n                    5\r\n                ],\r\n                \"secondarySelections\": [\r\n                    6\r\n                ],\r\n                \"quickPickCount\": 0,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondaryQuickPickCount\": 0,\r\n                \"secondarySelectionsQuickpicked\": false,\r\n                \"multiplier\": false,\r\n                \"quickpick\": false\r\n            }\r\n        ],\r\n        \"delay\": 0,\r\n        \"digest\": \"7c89acf42fba702ecde9c8bb20345fce4ca7933afba7114616acbdb210ae1578\"\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1277,57 +1271,57 @@
 	],
 	"variable": [
 		{
-			"id": "6844bd9d-b059-4056-8021-151e60329d66",
+			"id": "d2ede049-ba3a-45f9-8128-fe4b5ed75d88",
 			"key": "city",
 			"value": "sec"
 		},
 		{
-			"id": "68c452fa-f973-4fef-b2e0-c3a7019802ac",
+			"id": "a866a96f-0683-4bb6-850c-13d751e3dc87",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "cb475b66-f4db-4640-bd19-91ae3d5b358c",
+			"id": "a9325b44-ac22-436f-96ef-a928a855d96d",
 			"key": "mobilephone",
 			"value": "9320003330"
 		},
 		{
-			"id": "c88e4130-2a1b-45a9-887a-67b7899d76cc",
+			"id": "2bb56ac1-cfec-471e-8e9c-b516466825cc",
 			"key": "postcode",
 			"value": "30303"
 		},
 		{
-			"id": "6d634070-71cf-4b89-90d0-cb197ac7cece",
+			"id": "bace713f-2ea4-4dbc-945f-3a837509b03a",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "9cfb0a4f-9bc1-42f9-b4ee-ac416398dbde",
+			"id": "2dde7ed2-d310-40db-9fd8-cf148949766f",
 			"key": "streetaddress",
 			"value": "aqtesting etesteee"
 		},
 		{
-			"id": "a83071cb-2600-4d61-9c3e-7f8766fe5b65",
+			"id": "55b38f3a-ced4-45d0-b1e0-5dfdde85a0a3",
 			"key": "instructionid",
 			"value": 1063
 		},
 		{
-			"id": "f1158be0-f7d1-4d3a-b9a8-5e3bb73e87a4",
+			"id": "0e578959-7d13-4d03-a8d2-73beeaa681ad",
 			"key": "regPassword",
 			"value": "Password1"
 		},
 		{
-			"id": "85841848-22b1-4020-ab1d-341d5aa42fae",
+			"id": "89e104b1-22dd-4f48-b0a8-9606207b49e3",
 			"key": "regUserName",
 			"value": "mbskoaowrn@mailinator.com"
 		},
 		{
-			"id": "669006b2-e680-4258-9a75-396a86b72800",
+			"id": "41637ce6-d7ae-4c98-ac51-0bebf9826665",
 			"key": "OnePayToken",
-			"value": "qz9mr4OTDQQb4eojCtW+F2EuLGM="
+			"value": "8hwuJct5lzEhJEApKfCnbEW6PEw="
 		},
 		{
-			"id": "57758330-6ff8-4e92-bfd9-5ab0ce11b972",
+			"id": "0cd15eed-f647-4f3b-a169-764fec8c6782",
 			"key": "instructionId",
 			"value": 2490
 		}
