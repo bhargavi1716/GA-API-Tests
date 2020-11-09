@@ -254,10 +254,7 @@
 									"pm.test(\"authCode is present\", function () {\r",
 									"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
 									"});\r",
-									"\r",
-									"\r",
-									"\r",
-									"console.log(\"coming to log\")"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -841,49 +838,54 @@
 	],
 	"variable": [
 		{
-			"id": "dcde0230-7e66-42ca-ac5e-e25d6c361964",
+			"id": "44df5f96-a8de-4768-8c6f-b0d10e5233b4",
 			"key": "city",
 			"value": "Alpharetta"
 		},
 		{
-			"id": "b2206871-fd3b-4258-b72b-3f194be05174",
+			"id": "93bd46b3-3bfd-4db5-9438-41835c88a264",
 			"key": "countrycode",
 			"value": "US"
 		},
 		{
-			"id": "fdee4a2b-1a96-473e-8248-9ccfffd08060",
+			"id": "37b211d5-3389-437b-b904-1a5e5dff9de7",
 			"key": "mobilephone",
-			"value": "1171216632"
+			"value": "0788399710"
 		},
 		{
-			"id": "4a37bbc6-2301-4be5-95ef-3eaff37ef4e3",
+			"id": "e2e12e54-d8fe-4b71-8f9c-e846e7324c1c",
 			"key": "postcode",
 			"value": "30004"
 		},
 		{
-			"id": "3ce03ffa-f1e0-471c-a40e-ee8a4748e649",
+			"id": "59e26bd1-27ec-4145-9ebf-262f8b37f9cb",
 			"key": "state",
 			"value": "GA"
 		},
 		{
-			"id": "7ce0321a-7cdc-4567-a4e1-6f6b94af97ab",
+			"id": "4070b5fb-1a87-47c3-b483-5d471232c455",
 			"key": "streetaddress",
-			"value": "afpcda icwfuh"
+			"value": "rqfcbh wzgkcc"
 		},
 		{
-			"id": "499d5cef-7afd-41a4-a4c7-129617a74995",
+			"id": "559a3883-b1b4-4ad3-8181-37f9261c92e9",
 			"key": "instructionid",
-			"value": 907
+			"value": 1063
 		},
 		{
-			"id": "088decd1-a40f-4253-9a0d-390e9b9d4fea",
+			"id": "3f8f05be-6781-4b9b-99f6-ab3e58b80381",
 			"key": "regPassword",
 			"value": "Password1"
 		},
 		{
-			"id": "e59d03ed-3d5e-4ab6-bb32-56dded3fbc96",
+			"id": "6c2c393e-fe15-4959-81fc-fde6c84dced3",
 			"key": "regUserName",
-			"value": "vlgpxdtwbj@mailinator.com"
+			"value": "xisbvrhgmh@mailinator.com"
+		},
+		{
+			"id": "93d7a451-b8e4-4449-bde8-4b84ae3c093d",
+			"key": "OnePayToken",
+			"value": "HShif2Z5xnG9SDBg//sdTYGdnXs="
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -1,0 +1,1336 @@
+{
+	"info": {
+		"_postman_id": "34cead3a-42ce-460b-8b4e-ec2aa6914cb2",
+		"name": "CATSmokeWagering",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OAuthLoginAPI",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a755d6f6-d4ef-40f7-a550-4a152a4c712f",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.unset(\"authCode\");\r",
+									"pm.environment.set(\"authCode\",jsonData[0].authCode);\r",
+									"\r",
+									"pm.test(\"authCode is present\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"authCode\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "93f5bb4d-71d7-4ff2-84b5-be81a851e1e3",
+								"exec": [
+									"\r",
+									"\r",
+									"regUserName = pm.collectionVariables.get(\"regUserName\");  \r",
+									"regPassword = pm.collectionVariables.get(\"regPassword\");\r",
+									"\r",
+									"console.log(pm.collectionVariables.get(\"regUserName\"));\r",
+									"console.log(pm.collectionVariables.get(\"regPassword\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",  \r\n    \"resourceOwnerCredentials\":    {\r\n      \"USERNAME\": \"{{username}}\",\r\n      \"PASSWORD\": \"{{Password}}\"\r\n   }\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/oauth/login",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"oauth",
+								"login"
+							]
+						},
+						"description": "POSTRequest, gives auth code"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "714db343-1dec-4003-b84a-7704eaadca7e",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.unset(\"refreshToken\");\r",
+									"pm.environment.set(\"refreshToken\",jsonData[0].token);\r",
+									"pm.environment.unset(\"oAuthToken\");\r",
+									"pm.environment.set(\"oAuthToken\",jsonData[1].token);\r",
+									"\r",
+									"\r",
+									"pm.test(\"tokenType is present\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"tokenType\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"token is present\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"token type is REFRESH\", function() {\r",
+									"    pm.expect(jsonData[0].tokenType).to.eql(\"REFRESH\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"token type is OAuth\", function() {\r",
+									"  pm.expect(jsonData[1].tokenType).to.eql(\"OAuth\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f413cfa4-51d0-4ba1-b5a5-1f97ff998849",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"siteId\": \"{{siteId}}\",\r\n    \"clientId\": \"{{clientIdMobile}}\",    \r\n    \"authCode\": \"{{authCode}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"oauth",
+								"self",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Login\r\nGenerate Token\r\nRefresh Token",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GetPlayerProfile",
+			"item": [
+				{
+					"name": "Get Player Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "480d41f1-bde2-4caa-9735-d6e0f8feba46",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checking personal info\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"personalInfo\");\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var countrycode = jsonData.personalInfo.addresses.MAILING.isoCountryCode;\r",
+									"var state = jsonData.personalInfo.addresses.MAILING.state;\r",
+									"var city = jsonData.personalInfo.addresses.MAILING.city;\r",
+									"var postcode = jsonData.personalInfo.addresses.MAILING.postalCode;\r",
+									"var streetaddress = jsonData.personalInfo.addresses.MAILING.address1 + \" \" + jsonData.personalInfo.addresses.MAILING.address2\r",
+									"var mobilephone = jsonData.personalInfo.phones.MOBILE.number\r",
+									"\r",
+									"pm.collectionVariables.unset(\"countrycode\");\r",
+									"pm.collectionVariables.set(\"countrycode\",countrycode);\r",
+									"console.log(\"countrycode \",countrycode);\r",
+									"\r",
+									"pm.collectionVariables.unset(\"state\");\r",
+									"pm.collectionVariables.set(\"state\",state);\r",
+									"console.log(\"state \",state);\r",
+									"\r",
+									"pm.collectionVariables.unset(\"city\");\r",
+									"pm.collectionVariables.set(\"city\",city);\r",
+									"console.log(\"city \",city);\r",
+									"\r",
+									"pm.collectionVariables.unset(\"postcode\");\r",
+									"pm.collectionVariables.set(\"postcode\",postcode);\r",
+									"console.log(\"postcode \",postcode);\r",
+									"\r",
+									"\r",
+									"pm.collectionVariables.unset(\"streetaddress\");\r",
+									"pm.collectionVariables.set(\"streetaddress\",streetaddress);\r",
+									"console.log(\"streetaddress \",streetaddress);\r",
+									"\r",
+									"pm.collectionVariables.unset(\"mobilephone\");\r",
+									"pm.collectionVariables.set(\"mobilephone\",mobilephone);\r",
+									"console.log(\"mobilephone \",mobilephone);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1ad13c96-8f90-49cb-ba34-a8f55f44a898",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/players/self",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"players",
+								"self"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "OnePayTokenandValidateSession",
+			"item": [
+				{
+					"name": "GetOnePayToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4c465f4f-165d-4b41-8ae8-6d33f6932cb1",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.unset(\"OnePayToken\");\r",
+									"pm.collectionVariables.set(\"OnePayToken\",jsonData.token);\r",
+									"\r",
+									"pm.test(\"One Pay Token is present\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "36df7bf9-5113-4a13-8e85-404fd7de335e",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/players/self/integration-token/ONEPAY",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"players",
+								"self",
+								"integration-token",
+								"ONEPAY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ValidateSession",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ae1585e-3454-4d8d-b717-dd956496897a",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"// console.log(\"************************\");\r",
+									"// console.log(\"jsonData.data.customerData.username \"+ jsonData.data.customerData.username);\r",
+									"// console.log(\"pm.collectionVariables.get(regUsername) \" + pm.collectionVariables.get(\"regUsername\"));\r",
+									"// console.log(\"************************\");\r",
+									"\r",
+									"pm.test(\"checking for username\", function () {\r",
+									"    pm.expect(jsonData.data.customerData.username).to.eql(pm.environment.get(\"username\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d4cd51a8-48c0-4868-9b82-d8f69740dab9",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n    \"systemId\":\"1\",\r\n    \"temporarySessionId\":\"{{OnePayToken}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{cashierendpoint}}/cashierproxy/validateSession",
+							"host": [
+								"{{cashierendpoint}}"
+							],
+							"path": [
+								"cashierproxy",
+								"validateSession"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2bd8169e-6277-473b-b69e-8ced0261bd63",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "03a37c0b-3c72-4999-b490-f3d4799d0da3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GetInstructions",
+			"item": [
+				{
+					"name": "GetInstructions",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "861ee993-65b4-4b74-8713-23a623366f32",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3bcb9440-1558-4ee5-8aee-2bc54d03ef88",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.unset(\"instructionId\");\r",
+									"pm.collectionVariables.set(\"instructionId\",jsonData.data.instructions[0].instructionId);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Instruction Id is present\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"instructionId\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cashierendpoint}}/cashierproxy/getInstructions",
+							"host": [
+								"{{cashierendpoint}}"
+							],
+							"path": [
+								"cashierproxy",
+								"getInstructions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "047ae19d-61d3-49f9-bd70-6113e69714ec",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "457a0ff0-85dd-48e8-98ba-470186bffb2f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AddFundstToAcc",
+			"item": [
+				{
+					"name": "AddFundsToAcc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0dabec04-e036-4b8a-87ff-5e64eecc8cee",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log(instructionId)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "881797d4-299d-4dc2-bc83-050f270023a7",
+								"exec": [
+									"instructionId = pm.collectionVariables.get(\"instructionId\");  \r",
+									"console.log(instructionId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instructionId\": \"{{instructionId}}\",\r\n    \"transactionData\": {\r\n        \"amountOrdered\": 10,\r\n        \"currencyIdOrder\": \"USD\",\r\n        \"ipAddress\": \"127.0.0.1\",\r\n        \"txTypeId\": \"Deposit\",\r\n        \"terminalFingerprint\": \"event-type%3DDEPOSIT\"\r\n    },\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{cashierendpoint}}/cashierproxy/orderTx",
+							"host": [
+								"{{cashierendpoint}}"
+							],
+							"path": [
+								"cashierproxy",
+								"orderTx"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd2574bc-842d-44f1-9321-068f306b5ed6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ef2624b-9e81-43eb-ba75-d1cda5018794",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GetAvailableBalance",
+			"item": [
+				{
+					"name": "GetBalance",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1811611d-6f4b-48ab-8f0a-07bfe71c59a0",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf04a980-c667-4dd9-a74d-4bd6b567ada7",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"checking for status of the get available balance\", function () {\r",
+									"    pm.expect(jsonData.status.success).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cashierendpoint}}/cashierproxy/getBalances",
+							"host": [
+								"{{cashierendpoint}}"
+							],
+							"path": [
+								"cashierproxy",
+								"getBalances"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GameAvailability",
+			"item": [
+				{
+					"name": "Get Games",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75eb872a-fdf5-4b27-a718-287a40c50975",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"\r",
+									"for (var i = 0; i < jsonData.games.length; i++) {\r",
+									"    \r",
+									"    pm.test(\"Verifying the game name in the avaialble draw games \" + jsonData.games[i].gameName, () => {\r",
+									"\r",
+									"        pm.expect(jsonData.games[i].gameName).to.be.oneOf([\"FANTASY 5\",\"CASH4LIFE\",\"JUMBO LOTTO\",\"POWERBALL\",\"MEGA MILLIONS\",\"KENO!\",\"ALL OR NOTHING\",\"CASH 3\",\"CASH 4\",\"CASH POP\",\"Addon\", \"GEORGIA FIVE\"]);\r",
+									"         pm.expect(jsonData.games[0].gameStatus).to.be.oneOf([\"ACTIVE\",\"INACTIVE\"]);\r",
+									"    \r",
+									"    });\r",
+									"   \r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/draw-games/games",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"draw-games",
+								"games"
+							]
+						},
+						"description": "View all games"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PlaceWagers",
+			"item": [
+				{
+					"name": "PowerBall Wagering",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f6fd3fe2-6882-412e-9c49-961d4976871a",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "110f754d-359c-4317-9976-b6d707cc381e",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"    \r",
+									"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].gameName).to.eql(\"POWERBALL\");\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Requested-With",
+								"type": "text",
+								"value": "XMLHttpRequest"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"type\": \"NORMAL\",\r\n        \"duration\": 1,\r\n        \"gameName\": \"POWERBALL\",\r\n        \"price\": 200,\r\n        \"stake\": 200,\r\n        \"boards\": [\r\n            {\r\n                \"primarySelections\": [\r\n                    23,\r\n                    27,\r\n                    38,\r\n                    59,\r\n                    61\r\n                ],\r\n                \"secondarySelections\": [\r\n                    15\r\n                ],\r\n                \"quickPickCount\": 5,\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"multiplier\": false,\r\n                \"quickpick\": false\r\n            }\r\n        ],\r\n        \"delay\": 0,   \r\n        \"digest\": \"d1b16b32a966d736bdfdfa07f385837033a1ad29a155d965b41c4b3b4ee91bd4\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"draw-games",
+								"wagers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mega Millions Wagering",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a3d49784-0e84-4003-950b-5d92472dbbb8",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d418b20-89fb-4da4-bef9-0865e1149469",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"    \r",
+									"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].gameName).to.eql(\"MEGA MILLIONS\");\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"type\": \"NORMAL\",\r\n        \"duration\": 1,\r\n        \"gameName\": \"MEGA MILLIONS\",\r\n        \"price\": 200,\r\n        \"stake\": 200,\r\n        \"boards\": [\r\n            {\r\n                \"primarySelections\": [\r\n                    3,\r\n                    9,\r\n                    40,\r\n                    41,\r\n                    64\r\n                ],\r\n                \"secondarySelections\": [\r\n                    18\r\n                ],\r\n                \"quickPickCount\": 5,\r\n                \"primarySelectionsQuickpicked\": true,\r\n                \"secondaryQuickPickCount\": 1,\r\n                \"secondarySelectionsQuickpicked\": true,\r\n                \"multiplier\": false,\r\n                \"quickpick\": true\r\n            }\r\n        ],\r\n        \"delay\": 0,\r\n        \"digest\": \"520b2c16441fae53ca693bf66a9e1e0e7022b4bcf38b32ad526031c38d424549\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"draw-games",
+								"wagers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CashPopWagering",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "30ca8cc7-ad55-4d15-a134-7e938ffa6fad",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "34f07bc8-9836-41fc-8a66-e7cd3d09c4e3",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"    \r",
+									"pm.test(\"Checking for game name \" + jsonData[0].gameName, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].gameName).to.eql(\"CASH POP\");\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checking for draw status \"+jsonData[0].status, () => {\r",
+									"\r",
+									"        pm.expect(jsonData[0].status).to.eql(\"ACCEPTED\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"type\": \"NORMAL\",\r\n        \"duration\": 1,\r\n        \"gameName\": \"CASH POP\",\r\n        \"drawNames\": [\r\n            \"Matinee\"\r\n        ],\r\n        \"price\": 100,\r\n        \"stake\": 100,\r\n        \"boards\": [\r\n            {\r\n                \"primarySelections\": [\r\n                    1\r\n                ],\r\n                \"primarySelectionsQuickpicked\": false,\r\n                \"secondarySelectionsQuickpicked\": false,\r\n                \"multiplier\": false,\r\n                \"quickpick\": false\r\n            }\r\n        ],\r\n        \"addonPlayed\": false,\r\n        \"delay\": 0,\r\n        \"digest\": \"53ed82a0f15187da0b6e570ef7c03cbab33c537800ddd76e7bf984dfde20d8a8\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/draw-games/wagers",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"draw-games",
+								"wagers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "71056b7a-e9da-45ec-bc35-0e78b261c4ed",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "318737cf-2aeb-425e-bb3d-10bdd9f3a105",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Logout",
+			"item": [
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ccc3fa2-681c-4eb8-9a35-bac59ad3a0c3",
+								"exec": [
+									"pm.test(\"Status code is 204\", () => {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ec86a85a-cf6a-440d-828a-e5700394ad12",
+								"exec": [
+									"var headervalue = 'OAuth ' + pm.environment.get(\"oAuthToken\");\r",
+									"pm.request.headers.add({key: 'Authorization', value: headervalue });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"siteId\": \"{{siteId}}\",\r\n   \"scope\": null,\r\n   \"clientId\": \"{{clientIdMobile}}\",\r\n   \"clientCredentials\": null,\r\n   \"authCode\": null,\r\n   \"token\": \"{{oAuthToken}}\",\r\n   \"tokenType\": \"OAuth\",\r\n   \"tokenParams\":    {\r\n      \"expiresIn\": \"900\",\r\n      \"issueTime\": \"1564702557532\"\r\n   },\r\n   \"resourceOwnerCredentials\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v1/oauth/self/tokens",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"oauth",
+								"self",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "WinningNumbers",
+			"item": [
+				{
+					"name": "POWERBALL Winning Numbers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2976d4d0-b44b-4979-9954-08531dc8c039",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+									"    \r",
+									"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+									"        pm.expect(jsonData.draws[i].gameName).to.eql(\"POWERBALL\");\r",
+									"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+									"        // console.log(\"*************\");\r",
+									"        // console.log(jsonData.draws[i].results) \r",
+									"        // console.log(jsonData.draws[i].results.length);\r",
+									"        // console.log(jsonData.draws[i].prizeTiers.length);\r",
+									"        // console.log(\"*************\");\r",
+									"        \r",
+									"        pm.test(\"closeTime is present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('closeTime');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"results are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('results');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"prizeTiers are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('prizeTiers');\r",
+									"        });\r",
+									"    });\r",
+									"   \r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=POWERBALL&status=CLOSED&size=20",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"draw-games",
+								"draws",
+								"page"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "previous-draws",
+									"value": "100"
+								},
+								{
+									"key": "game-names",
+									"value": "POWERBALL"
+								},
+								{
+									"key": "status",
+									"value": "CLOSED"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cash Pop Winning Numbers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4c7449d5-abf1-4260-a252-7b5abea93b29",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+									"    \r",
+									"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+									"        pm.expect(jsonData.draws[i].gameName).to.eql(\"CASH POP\");\r",
+									"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+									"\r",
+									"        // console.log(\"*************\");\r",
+									"        // console.log(jsonData.draws[i].results) \r",
+									"        // console.log(jsonData.draws[i].results.length);\r",
+									"        // console.log(jsonData.draws[i].prizeTiers.length);\r",
+									"        // console.log(\"*************\");\r",
+									"        \r",
+									"        pm.test(\"closeTime is present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('closeTime');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"results are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('results');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"prizeTiers are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('prizeTiers');\r",
+									"        });\r",
+									"    });\r",
+									"   \r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=CASH+POP&status=CLOSED",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"draw-games",
+								"draws",
+								"page"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "previous-draws",
+									"value": "100"
+								},
+								{
+									"key": "game-names",
+									"value": "CASH+POP"
+								},
+								{
+									"key": "status",
+									"value": "CLOSED"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MEGA MILLIONS Winning Numbers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "becca01d-468d-42b7-97d6-4ed5911c9cf1",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"for (var i = 0; i < jsonData.draws.length; i++) {\r",
+									"    \r",
+									"    pm.test(\"Checking for game name \" + jsonData.draws[i].gameName + \" game status \"+jsonData.draws[i].status, () => {\r",
+									"        pm.expect(jsonData.draws[i].gameName).to.eql(\"MEGA MILLIONS\");\r",
+									"        pm.expect(jsonData.draws[i].status).to.eql(\"CLOSED\");\r",
+									"        \r",
+									"        // console.log(\"*************\");\r",
+									"        // console.log(jsonData.draws[i].results) \r",
+									"        // console.log(jsonData.draws[i].results.length);\r",
+									"        // console.log(jsonData.draws[i].prizeTiers.length);\r",
+									"        // console.log(\"*************\");\r",
+									"\r",
+									"        pm.test(\"closeTime is present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('closeTime');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"Prizetiers are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('prizeTiers');\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"results are present or not for Draw Id : \"+ jsonData.draws[i].id, function() {\r",
+									"           pm.expect(jsonData.draws[i]).to.have.property('results');\r",
+									"        });\r",
+									"       \r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mobileendpoint}}/api/v2/draw-games/draws/page?order=desc&previous-draws=100&game-names=MEGA MILLIONS&size=20&status=CLOSED",
+							"host": [
+								"{{mobileendpoint}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"draw-games",
+								"draws",
+								"page"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "previous-draws",
+									"value": "100"
+								},
+								{
+									"key": "game-names",
+									"value": "MEGA MILLIONS"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": "CLOSED"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "97243507-8fec-4526-ad22-cec4068bae19",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "78686435-54f1-4aa6-89e8-c709c07b1c75",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "6844bd9d-b059-4056-8021-151e60329d66",
+			"key": "city",
+			"value": "sec"
+		},
+		{
+			"id": "68c452fa-f973-4fef-b2e0-c3a7019802ac",
+			"key": "countrycode",
+			"value": "US"
+		},
+		{
+			"id": "cb475b66-f4db-4640-bd19-91ae3d5b358c",
+			"key": "mobilephone",
+			"value": "9320003330"
+		},
+		{
+			"id": "c88e4130-2a1b-45a9-887a-67b7899d76cc",
+			"key": "postcode",
+			"value": "30303"
+		},
+		{
+			"id": "6d634070-71cf-4b89-90d0-cb197ac7cece",
+			"key": "state",
+			"value": "GA"
+		},
+		{
+			"id": "9cfb0a4f-9bc1-42f9-b4ee-ac416398dbde",
+			"key": "streetaddress",
+			"value": "aqtesting etesteee"
+		},
+		{
+			"id": "a83071cb-2600-4d61-9c3e-7f8766fe5b65",
+			"key": "instructionid",
+			"value": 1063
+		},
+		{
+			"id": "f1158be0-f7d1-4d3a-b9a8-5e3bb73e87a4",
+			"key": "regPassword",
+			"value": "Password1"
+		},
+		{
+			"id": "85841848-22b1-4020-ab1d-341d5aa42fae",
+			"key": "regUserName",
+			"value": "mbskoaowrn@mailinator.com"
+		},
+		{
+			"id": "669006b2-e680-4258-9a75-396a86b72800",
+			"key": "OnePayToken",
+			"value": "qz9mr4OTDQQb4eojCtW+F2EuLGM="
+		},
+		{
+			"id": "57758330-6ff8-4e92-bfd9-5ab0ce11b972",
+			"key": "instructionId",
+			"value": 2490
+		}
+	],
+	"protocolProfileBehavior": {}
+}
